@@ -9,16 +9,18 @@ export interface Personaje {
   nivel: number,
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class MarioService {
-  private apiURL = 'http://localhost:3000/api/personajes';
+  private apiURL = '/api/personajes';
 
   private _personajes$ = new BehaviorSubject<Personaje[]>([]);
   public personajes$ = this._personajes$.asObservable();
 
   constructor(private http: HttpClient) {}
+
+  getPersonajes() {
+    return this.http.get<Personaje[]>(this.apiURL);
+  }
 
   addPersonaje(personaje: Personaje): Observable<any> {
     return this.http.post<Personaje>(this.apiURL, personaje)
@@ -28,5 +30,9 @@ export class MarioService {
         this._personajes$.next([...current, newPersonaje]);
       })
     );
+  }
+
+  deletePersonaje(id: string): Observable<any> {
+    return this.http.delete(`${this.apiURL}/${id}`);
   }
 }
