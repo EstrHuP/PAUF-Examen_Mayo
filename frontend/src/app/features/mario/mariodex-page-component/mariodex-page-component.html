@@ -1,0 +1,13 @@
+<div class="pokedex-page">
+  <header class="header">
+    <h1>MarioDex</h1>
+    <button class="add-btn" (click)="openModal()">Crear personaje</button>
+  </header>
+</div>
+
+<!-- MODAL -->
+<div class="modal-backdrop" *ngIf="isShowModal">
+  <div class="modal-window">
+    <app-nuevo-personaje-component (closeModal)="closeModal()"></app-nuevo-personaje-component>
+  </div>
+</div>

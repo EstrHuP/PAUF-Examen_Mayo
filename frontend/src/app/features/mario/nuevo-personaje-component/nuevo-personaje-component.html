@@ -1,0 +1,22 @@
+<div class="modal-fondo">
+  <div class="modal-ventana">
+    <h2>Crear personaje</h2>
+    <form #form="ngForm" (ngSubmit)="addPersonaje(form)">
+      <input
+        type="text"
+        name="nombre"
+        [(ngModel)]="newPersonaje.nombre"
+        placeholder="Nombre"
+        required
+      />
+      <input type="text" name="tipo" [(ngModel)]="newPersonaje.tipo" placeholder="Tipo" required />
+      <!-- <select name="tipo" [(ngModel)]="newPersonaje.tipo" required>
+        <option value="" disabled selected>Selecciona tipo:</option>
+        <option *ngFor="let tSelected of tipos" [value]="tSelected"> {{ tSelected }} </option>
+      </select> -->
+      <input type="number" name="nivel" [(ngModel)]="newPersonaje.nivel" placeholder="Nivel de poder" />
+      <button type="submit">Añadir</button>
+      <button type="button" (click)="closeModal.emit()">Cancelar</button>
+    </form>
+  </div>
+</div>

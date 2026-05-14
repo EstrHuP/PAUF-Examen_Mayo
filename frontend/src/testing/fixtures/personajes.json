@@ -1,0 +1,12 @@
+[
+  {
+    "nombre": "Mario Bros",
+    "tipo": "Enemigo",
+    "nivel": 2
+  },
+  {
+    "nombre": "Luigi Bros",
+    "posicion": "Enemigo",
+    "nivel": 4
+  }
+]
