@@ -1,0 +1,13 @@
+export default `<!DOCTYPE html><html lang="en" data-beasties-container><head>
+  <meta charset="utf-8">
+  <title>ExamenAngular</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="styles-5INURTSO.css"><style ng-app-id="ng">.pokedex-page[_ngcontent-ng-c410407635]{padding:2rem}.header[_ngcontent-ng-c410407635]{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}.add-btn[_ngcontent-ng-c410407635]{background-color:#0de363;color:#000;border:none;padding:.6rem 1rem;border-radius:6px;cursor:pointer}.pokemon-grid[_ngcontent-ng-c410407635]{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1.5rem}.modal-backdrop[_ngcontent-ng-c410407635]{position:fixed;top:0;left:0;width:100%;height:100%;background:#000000a6;display:flex;justify-content:center;align-items:center;z-index:1000}.modal-window[_ngcontent-ng-c410407635]{background:#fff;padding:1.5rem;border-radius:10px;width:320px}</style></head>
+<body><!--nghm--><script type="text/javascript" id="ng-event-dispatch-contract">(()=>{function p(t,n,r,o,e,i,f,m){return{eventType:t,event:n,targetElement:r,eic:o,timeStamp:e,eia:i,eirp:f,eiack:m}}function u(t){let n=[],r=e=>{n.push(e)};return{c:t,q:n,et:[],etc:[],d:r,h:e=>{r(p(e.type,e,e.target,t,Date.now()))}}}function s(t,n,r){for(let o=0;o<n.length;o++){let e=n[o];(r?t.etc:t.et).push(e),t.c.addEventListener(e,t.h,r)}}function c(t,n,r,o,e=window){let i=u(t);e._ejsas||(e._ejsas={}),e._ejsas[n]=i,s(i,r),s(i,o,!0)}window.__jsaction_bootstrap=c;})();
+</script><script>window.__jsaction_bootstrap(document.body,"ng",["click"],[]);</script>
+  <app-root ng-version="21.1.2" ngh="1" ng-server-context="ssg"><router-outlet></router-outlet><app-mariodex-page-component _nghost-ng-c410407635 ngh="0"><div _ngcontent-ng-c410407635 class="pokedex-page"><header _ngcontent-ng-c410407635 class="header"><h1 _ngcontent-ng-c410407635>MarioDex</h1><button _ngcontent-ng-c410407635 class="add-btn" jsaction="click:;">Crear personaje</button></header></div><!----></app-mariodex-page-component><!----></app-root>
+<script src="main-CTWQKNOW.js" type="module"></script>
+
+<script id="ng-state" type="application/json">{"__nghData__":[{"t":{"6":"t0"},"c":{"6":[]}},{"c":{"0":[{"i":"c410407635","r":1}]}}]}</script></body></html>`;
