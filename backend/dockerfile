@@ -1,49 +1,45 @@
-# 1. Usamos una imagen oficial de PHP con Apache
+# Usar la imagen oficial de PHP con Apache
 FROM php:8.4-apache
 
-
-# 2. Instalamos extensiones necesarias para Laravel y SQLite
+# Instalar dependencias del sistema y extensiones PHP requeridas por Laravel
 RUN apt-get update && apt-get install -y \
-libpng-dev \
-libonig-dev \
-libxml2-dev \
-zip \
-unzip \
-git \
-curl \
-sqlite3 \
-libsqlite3-dev
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    curl \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-
-# 3. Limpiamos cache de paquetes
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-
-# 4. Instalamos extensiones de PHP
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd pdo_sqlite
-
-
-# 5. Habilitamos el módulo rewrite de Apache (CRÍTICO para las rutas de Laravel)
+# Habilitar mod_rewrite de Apache (necesario para las rutas de Laravel)
 RUN a2enmod rewrite
 
+# Establecer el directorio de trabajo
+WORKDIR /var/www/html
 
-# 6. Instalamos Composer
+# Copiar los archivos del proyecto
+COPY . .
+
+# Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Instalar las dependencias de Laravel
+RUN composer install --no-dev --optimize-autoloader
 
-# 7. Copiamos los archivos del proyecto al contenedor
-COPY . /var/www/html
+# 1. Asegurar que exista el archivo SQLite vacío
+RUN mkdir -p /var/www/html/database && touch /var/www/html/database/database.sqlite
+# 2. Ejecutar las migraciones para crear las tablas automáticamente
+RUN DB_CONNECTION=sqlite DB_DATABASE=/var/www/html/database/database.sqlite php artisan migrate --force
+# 3. Dar permisos a storage, cache y a la base de datos
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
 
-
-# 8. Configuramos permisos para Laravel
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-
-
-# 9. Ajustamos el DocumentRoot de Apache a la carpeta /public de Laravel
+# Cambiar el DocumentRoot de Apache a la carpeta public de Laravel
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
+# 4. Habilitar .htaccess cambiando AllowOverride None a AllowOverride All (Evita el error 404 en las peticiones a la API)
+RUN sed -ri -e 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
 
-# 10. Exponemos el puerto
+# Exponer el puerto 80
 EXPOSE 80
